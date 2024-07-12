@@ -13,21 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const inputs = subject.getElementsByTagName('input');
             const select = subject.getElementsByTagName('select')[0];
             
-            const credits = parseFloat(inputs[2].value);
+            const credits = parseFloat(inputs[1].value);
             const grade = parseFloat(select.value);
             
             totalCredits += credits;
             totalGradePoints += credits * grade;
             
-            const subject_gpa = credits * grade;
-            document.getElementById('subject_gpa').textContent = subject_gpa.toFixed(2);
-        }
+                   
+    }
        
         if (totalCredits === 0) {
             document.getElementById('result').textContent = 'No subjects entered.';
             return;
         }
-
 
         const gpa = totalGradePoints / totalCredits;
         document.getElementById('result').textContent = `GPA: ${gpa.toFixed(2)}`;
@@ -37,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const subjectsContainer = document.getElementById('subjectsContainer');
         const subjectTemplate = `
             <div class="subject">
-                <input type="text" placeholder="Subject Code" required>
                 <input type="text" placeholder="Subject Name" required>
                 <input type="number" placeholder="Credits" min="1" required>
                 <select required>
@@ -55,8 +52,20 @@ document.addEventListener('DOMContentLoaded', function() {
         subjectsContainer.insertAdjacentHTML('beforeend', subjectTemplate);
     }
 
+    function removeSubject() {
+    const subjectsContainer = document.getElementById('subjectsContainer');
+    const subjects = subjectsContainer.getElementsByClassName('subject');
+    if (subjects.length > 1) {
+      subjectsContainer.removeChild(subjects[subjects.length - 1]);
+    }
+  }
+
+
+
     document.getElementById('gpaForm').addEventListener('submit', calculateGPA);
 
     document.getElementById('addSubjectButton').addEventListener('click', addSubject);
+
+    document.getElementById('removeSubjectButton').addEventListener('click', removeSubject);
 });
 
